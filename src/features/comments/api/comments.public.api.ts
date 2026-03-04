@@ -7,7 +7,7 @@ import {
   GetRepliesByRootIdInputSchema,
 } from "@/features/comments/comments.schema";
 import * as CommentService from "@/features/comments/comments.service";
-import { err, ok } from "@/lib/error";
+import { err } from "@/lib/error";
 import {
   createRateLimitMiddleware,
   hasSession,
@@ -95,5 +95,5 @@ export const getMyCommentsFn = createServerFn()
       return err({ reason: "UNAUTHENTICATED" });
     }
 
-    return ok(await CommentService.getMyComments(context, data));
+    return await CommentService.getMyComments(context, data);
   });

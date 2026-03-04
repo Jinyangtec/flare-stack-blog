@@ -72,9 +72,11 @@ export async function submitFriendLink(
 }
 
 export async function getMyFriendLinks(context: AuthContext) {
-  return await FriendLinkRepo.getFriendLinksByUserId(
-    context.db,
-    context.session.user.id,
+  return ok(
+    await FriendLinkRepo.getFriendLinksByUserId(
+      context.db,
+      context.session.user.id,
+    ),
   );
 }
 
@@ -149,7 +151,7 @@ export async function getAllFriendLinks(
     }),
   ]);
 
-  return { items, total };
+  return ok({ items, total });
 }
 
 export async function approveFriendLink(

@@ -8,7 +8,7 @@ import {
   UpdateFriendLinkInputSchema,
 } from "../friend-links.schema";
 import * as FriendLinkService from "../friend-links.service";
-import { err, ok } from "@/lib/error";
+import { err } from "@/lib/error";
 import { hasSession, sessionMiddleware } from "@/lib/middlewares";
 
 export const getAllFriendLinksFn = createServerFn()
@@ -22,7 +22,7 @@ export const getAllFriendLinksFn = createServerFn()
       return err({ reason: "PERMISSION_DENIED" });
     }
 
-    return ok(await FriendLinkService.getAllFriendLinks(context, data));
+    return await FriendLinkService.getAllFriendLinks(context, data);
   });
 
 export const createFriendLinkFn = createServerFn({

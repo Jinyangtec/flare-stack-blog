@@ -8,7 +8,7 @@ import {
   sessionMiddleware,
   turnstileMiddleware,
 } from "@/lib/middlewares";
-import { err, ok } from "@/lib/error";
+import { err } from "@/lib/error";
 
 export const submitFriendLinkFn = createServerFn({
   method: "POST",
@@ -44,5 +44,5 @@ export const getMyFriendLinksFn = createServerFn()
       return err({ reason: "UNAUTHENTICATED" });
     }
 
-    return ok(await FriendLinkService.getMyFriendLinks(context));
+    return await FriendLinkService.getMyFriendLinks(context);
   });

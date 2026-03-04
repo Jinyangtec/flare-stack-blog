@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import * as AuthService from "@/features/auth/auth.service";
 import { dbMiddleware, hasSession, sessionMiddleware } from "@/lib/middlewares";
-import { err, ok } from "@/lib/error";
+import { err } from "@/lib/error";
 
 export const getSessionFn = createServerFn()
   .middleware([sessionMiddleware])
@@ -14,7 +14,7 @@ export const userHasPasswordFn = createServerFn()
       return err({ reason: "UNAUTHENTICATED" });
     }
 
-    return ok(await AuthService.userHasPassword(context));
+    return await AuthService.userHasPassword(context);
   });
 
 export const getIsEmailConfiguredFn = createServerFn()

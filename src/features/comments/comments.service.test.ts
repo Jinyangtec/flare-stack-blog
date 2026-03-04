@@ -630,15 +630,19 @@ describe("CommentService", () => {
       });
 
       // Filter by status
-      const pendingOnly = await CommentService.getAllComments(adminContext, {
-        status: "pending",
-      });
+      const pendingOnly = unwrap(
+        await CommentService.getAllComments(adminContext, {
+          status: "pending",
+        }),
+      );
       expect(pendingOnly.items.every((c) => c.status === "pending")).toBe(true);
 
       // Filter by postId
-      const byPost = await CommentService.getAllComments(adminContext, {
-        postId,
-      });
+      const byPost = unwrap(
+        await CommentService.getAllComments(adminContext, {
+          postId,
+        }),
+      );
       expect(byPost.items.every((c) => c.postId === postId)).toBe(true);
     });
 
@@ -659,9 +663,8 @@ describe("CommentService", () => {
         id: comment1.id,
       });
 
-      const stats = await CommentService.getUserCommentStats(
-        adminContext,
-        "user-1",
+      const stats = unwrap(
+        await CommentService.getUserCommentStats(adminContext, "user-1"),
       );
 
       expect(stats.totalComments).toBe(2);

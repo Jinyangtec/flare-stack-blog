@@ -2,13 +2,16 @@ import { z } from "zod";
 import * as AuthRepo from "@/features/auth/auth.data";
 import * as ConfigRepo from "@/features/config/config.data";
 import * as CacheService from "@/features/cache/cache.service";
+import { ok } from "@/lib/error";
 
 export async function getSession(context: SessionContext) {
   return context.session;
 }
 
 export async function userHasPassword(context: AuthContext) {
-  return await AuthRepo.userHasPassword(context.db, context.session.user.id);
+  return ok(
+    await AuthRepo.userHasPassword(context.db, context.session.user.id),
+  );
 }
 
 export async function getIsEmailConfigured(

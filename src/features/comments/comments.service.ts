@@ -237,7 +237,7 @@ export async function getMyComments(
     },
   );
 
-  return comments;
+  return ok(comments);
 }
 
 // ============ Admin Service Methods ============
@@ -263,7 +263,7 @@ export async function getAllComments(
     }),
   ]);
 
-  return { items, total };
+  return ok({ items, total });
 }
 
 export async function moderateComment(
@@ -355,5 +355,5 @@ export async function updateCommentStatus(
 }
 
 export async function getUserCommentStats(context: DbContext, userId: string) {
-  return await CommentRepo.getUserCommentStats(context.db, userId);
+  return ok(await CommentRepo.getUserCommentStats(context.db, userId));
 }

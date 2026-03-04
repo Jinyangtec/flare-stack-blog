@@ -8,6 +8,7 @@ import {
   waitForBackgroundTasks,
 } from "tests/test-utils";
 import * as FriendLinkService from "./friend-links.service";
+import { unwrap } from "@/lib/error";
 
 describe("FriendLinkService", () => {
   let adminContext: ReturnType<typeof createAdminTestContext>;
@@ -254,7 +255,9 @@ describe("FriendLinkService", () => {
       expect(result.data?.success).toBe(true);
 
       // Verify it's actually deleted
-      const list = await FriendLinkService.getAllFriendLinks(adminContext, {});
+      const list = unwrap(
+        await FriendLinkService.getAllFriendLinks(adminContext, {}),
+      );
       expect(list.items.find((l) => l.id === created.data!.id)).toBeUndefined();
     });
 
@@ -308,17 +311,19 @@ describe("FriendLinkService", () => {
       });
 
       // Query by status
-      const approvedList = await FriendLinkService.getAllFriendLinks(
-        adminContext,
-        { status: "approved" },
+      const approvedList = unwrap(
+        await FriendLinkService.getAllFriendLinks(adminContext, {
+          status: "approved",
+        }),
       );
       expect(approvedList.items.every((l) => l.status === "approved")).toBe(
         true,
       );
 
-      const rejectedList = await FriendLinkService.getAllFriendLinks(
-        adminContext,
-        { status: "rejected" },
+      const rejectedList = unwrap(
+        await FriendLinkService.getAllFriendLinks(adminContext, {
+          status: "rejected",
+        }),
       );
       expect(rejectedList.items.every((l) => l.status === "rejected")).toBe(
         true,
@@ -332,7 +337,9 @@ describe("FriendLinkService", () => {
         contactEmail: "me@test.com",
       });
 
-      const myLinks = await FriendLinkService.getMyFriendLinks(userContext);
+      const myLinks = unwrap(
+        await FriendLinkService.getMyFriendLinks(userContext),
+      );
 
       expect(myLinks.length).toBe(1);
       expect(myLinks[0].siteName).toBe("My Site");

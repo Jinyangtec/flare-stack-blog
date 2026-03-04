@@ -6,7 +6,7 @@ import {
   ModerateCommentInputSchema,
 } from "@/features/comments/comments.schema";
 import * as CommentService from "@/features/comments/comments.service";
-import { err, ok } from "@/lib/error";
+import { err } from "@/lib/error";
 import { hasSession, sessionMiddleware } from "@/lib/middlewares";
 
 // Admin API - Get all comments with filters
@@ -21,7 +21,7 @@ export const getAllCommentsFn = createServerFn()
       return err({ reason: "PERMISSION_DENIED" });
     }
 
-    return ok(await CommentService.getAllComments(context, data));
+    return await CommentService.getAllComments(context, data);
   });
 
 // Admin API - Moderate a comment (approve/reject)
@@ -74,5 +74,5 @@ export const getUserStatsFn = createServerFn()
       return err({ reason: "PERMISSION_DENIED" });
     }
 
-    return ok(await CommentService.getUserCommentStats(context, data.userId));
+    return await CommentService.getUserCommentStats(context, data.userId);
   });
