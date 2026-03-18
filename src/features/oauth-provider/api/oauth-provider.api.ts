@@ -2,13 +2,16 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { serverEnv } from "@/lib/env/server.env";
 import { adminMiddleware } from "@/lib/middlewares";
-import { GetOAuthClientMetadataInputSchema } from "../../oauth-clients/schema/oauth-client.schema";
+import {
+  GetOAuthClientMetadataInputSchema,
+  OAuthScopeListSchema,
+} from "../../oauth-clients/schema/oauth-client.schema";
 import { OAUTH_PROVIDER_CONSENT_PAGE } from "../oauth-provider.shared";
 
 const CompleteOAuthConsentInputSchema = z.object({
   accept: z.boolean(),
   oauthQuery: z.string(),
-  scope: z.array(z.string()),
+  scope: OAuthScopeListSchema,
 });
 
 export const getOAuthClientMetadataFn = createServerFn({
